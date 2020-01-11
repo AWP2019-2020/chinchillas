@@ -6,6 +6,9 @@ Edit comment
 {% block content %}
 <form method="post" class="form-inline justify-content-center">
     {% csrf_token %}
+    <div class="form-group">
+        {{ form.errors }}
+    </div>
     <div class="form-group mx-2">
         <input class="form-control" type="text" name="title" required="" id="id_title" maxlength="200" value="{{ form.title.initial }}">
     </div>
@@ -13,7 +16,7 @@ Edit comment
         <textarea class="form-control" name="desc" required="" id="id_desc" maxlength="2000">{{ form.desc.initial }}</textarea>
     </div>
     <div class="form-group mx-2">
-        <input class="form-control" type="text" name="rating" required="" id="id_rating" maxlength="1" value="{{ form.title.initial }}">
+        <input class="form-control" type="text" name="rating" required="" id="id_rating" maxlength="1" value="{{ form.rating.initial }}">
     </div>
     <input class="btn btn-secondary" type="submit" value="Update review"/>
 </form>

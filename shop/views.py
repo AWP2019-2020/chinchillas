@@ -14,7 +14,7 @@ from django.urls import reverse, reverse_lazy
 
 def homepage(request):
     category_list = Category.objects.all();
-    return render(request, 'homepage.html', {'category_list': category_list})
+    return render(request, 'index.html', {'category_list': category_list})
 
 
 class RegisterView(CreateView):
@@ -127,7 +127,6 @@ class ReviewDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse_lazy("product_detail", kwargs={"pk": self.kwargs['pk']})
-
 
 
 class UserProfileView(LoginRequiredMixin, DetailView):
