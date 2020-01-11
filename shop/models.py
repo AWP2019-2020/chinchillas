@@ -16,6 +16,6 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        unique_together = ['name']
 
+class Categogory(models.Model):
+    name = models.CharField(max_length=200)
