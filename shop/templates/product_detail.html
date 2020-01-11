@@ -8,16 +8,32 @@
 <div class="container">
     <div class="p-3">
         <div class="card">
-            {% if product.image %}
-            <img class="card-img-top" src="{{ product.image.url }}" alt="Card image cap">
+
+             {% if product.image %}
+                <div class="product-img-div text-center p-2">
+                        <img class="img-thumbnail" src="{{ product.image.url }}" alt="Card image cap">
+                </div>
             {% endif %}
             <div class="card-body">
                 <h1 class="card-title">
+                    <p class="card-text">
+                        <a href="#">{{ product.name }}</a>
+                    </p>
+
                     {{ product.text }}
                     {% if product.created_at|date:"Y-m-d H:i" != product.updated_at|date:"Y-m-d H:i" %}
                     <small><i>(edited)</i></small>
                     {% endif %}
                 </h1>
+                <p class="card-text">
+                    <a>{{ product.desc }}</a>
+                </p>
+                <p class="card-text">Price:
+                    <a>{{ product.price }}</a>
+                </p>
+                <p class="card-text">Rating:
+                    <a>{{ product.totalRating }}</a>
+                </p>
                 <p class="card-text">Created by:
                     <a href="#">{{ product.created_by.username }}</a>
                 </p>
@@ -25,6 +41,7 @@
             <div class="card-footer text-muted">
                 {{ product.created_at }}
             </div>
+
         </div>
     </div>
 

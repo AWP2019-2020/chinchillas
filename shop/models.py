@@ -26,6 +26,16 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def totalRating(self):
+        sum = 0
+        reviews = self.reviews.all()
+        if len(reviews):
+            for review in list(reviews):
+                sum += review.rating
+            return sum / len(reviews)
+        return 0
+
 
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')

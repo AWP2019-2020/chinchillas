@@ -25,7 +25,9 @@
                   {%endif %}
                   </a>
                   <div class="card-body">
+                      <a href="{% url 'product_detail' prod.id %}">
                       <h5 class="card-title">{{ prod.name }}</h5>
+                      </a>
                     <p class="card-text">{{ prod.desc }}</p>
                     <div class="d-flex justify-content-between align-items-center">
                     </div>
