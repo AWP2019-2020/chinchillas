@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
-    View, TemplateView, CreateView,
+    View, TemplateView, CreateView, DetailView
 )
 
 from shop.forms import ReviewForm
@@ -89,3 +89,12 @@ def review_create(request, pk):
                 **form.cleaned_data
             )
             return redirect(reverse_lazy("product_detail", kwargs={"pk": pk}))
+
+class UserProfileView(LoginRequiredMixin, DetailView):
+    template_name = 'user_profile.html'
+    context_object_name = 'userprofile'
+
+    def get_object(self):
+        user = User.objects.get(id=self.kwargs['pk'])
+        userprofile = user.profile.first()
+        return userprofile

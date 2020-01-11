@@ -6,6 +6,14 @@ from shop.views import (
     LogoutView,
     product_detail, category_detail, review_create,
     shoppingCart)
+  index,
+  RegisterView,
+  LoginView,
+  LogoutView,
+  UserProfileView,
+  UserProfile,
+  product_detail, category_detail, review_create, UserProfile
+)
 
 urlpatterns = [
     path('', index, name='index'),
@@ -16,4 +24,5 @@ urlpatterns = [
     path('product/<int:pk>', product_detail, name='product_detail'),
     path('category/<int:pk>', category_detail, name='category_detail'),
     path('product/<int:pk>/review/create', review_create, name='review_create'),
+    path('user_profile/<int:pk>', UserProfileView.as_view(), name='user_profile'),
 ]

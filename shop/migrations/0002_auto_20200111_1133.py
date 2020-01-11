@@ -13,6 +13,16 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+         migrations.CreateModel(
+            name='Country',
+            fields=[
+                ('code', models.CharField(max_length=3, primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=70)),
+            ],
+            options={
+                'verbose_name_plural': 'Countries',
+            },
+        ),
         migrations.AlterField(
             model_name='product',
             name='created_by',
