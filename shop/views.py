@@ -12,8 +12,9 @@ from shop.models import User, Product, Category, Review
 from django.urls import reverse, reverse_lazy
 
 
-def index(request):
-    return render(request, 'index.html')
+def homepage(request):
+    category_list = Category.objects.all();
+    return render(request, 'homepage.html', {'category_list': category_list})
 
 
 class RegisterView(CreateView):
