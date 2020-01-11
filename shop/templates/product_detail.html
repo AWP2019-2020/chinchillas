@@ -27,6 +27,59 @@
             </div>
         </div>
     </div>
+
+    <div class=" col-sm-12">
+        <h2>Reviews</h2>
+
+        {% if user.is_authenticated %}
+        <form action="{% url 'review_create' product.id %}" method="post" class="form-inline justify-content-center">
+            {% csrf_token %}
+            <!--{{ form.as_p }}-->
+            <div class="form-group mx-2">
+                <input class="form-control" type="text" name="title" required="" id="id_title" maxlength="200">
+            </div>
+            <div class="form-group mx-2">
+                <textarea class="form-control" name="desc" required="" id="id_desc" maxlength="2000"></textarea>
+            </div>
+            <div class="form-group mx-2">
+                <input class="form-control" type="text" name="rating" required="" id="id_rating" maxlength="1">
+            </div>
+            <input class="btn btn-secondary" type="submit" value="Adauga review"/>
+        </form>
+        {% endif %}
+
+        {% if product.reviews %}
+        {% regroup product.reviews.all|dictsortreversed:"created_at" by created_at as reviews %}
+        {% for review_group in reviews %}
+        {% for review in review_group.list %}
+        <div class="card m-3">
+
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    {{ review.title }}
+                    {{ review.desc }}
+                    {{ review.rating }}
+                    <footer class="blockquote-footer">reviewed by
+                        <cite><a href="#">{{ review.created_by.username }}</a></cite>
+                        on <cite>{{ review.created_at }}</cite>
+                    </footer>
+                </blockquote>
+            </div>
+            {% if user == review.created_by %}
+            <div class="m-2">
+                <a class="btn btn-secondary" href="{% url 'review_edit' product.id review.id %}">Edit review</a>
+                <a class="btn btn-secondary" href="{% url 'review_delete' product.id review.id %}">Delete review</a>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% else %}
+        No reviews
+        {% endif %}
+    </div>
+
+
 </div>
 
 

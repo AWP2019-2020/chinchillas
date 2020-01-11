@@ -19,17 +19,17 @@ class Product(models.Model):
     price = models.FloatField()
     rating = models.FloatField()
     image = models.FileField(upload_to='uploads/', blank=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products')
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
 class Review(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    desc = models.CharField(max_length=2000)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    title = models.CharField(max_length=200, blank=True, null=True)
+    desc = models.CharField(max_length=2000, blank=True, null=True)
     rating = models.FloatField()
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

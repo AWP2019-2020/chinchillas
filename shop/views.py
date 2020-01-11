@@ -4,7 +4,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
-    View, TemplateView, CreateView,
+    View,
+    TemplateView,
+    CreateView,
+    UpdateView,
+    DeleteView,
 )
 
 from shop.forms import ReviewForm
@@ -78,7 +82,33 @@ def review_create(request, pk):
             product = Product.objects.get(id=pk)
             Review.objects.create(
                 created_by=request.user,
-                post=product,
+                product=product,
                 **form.cleaned_data
             )
             return redirect(reverse_lazy("product_detail", kwargs={"pk": pk}))
+            # review_ = Review.objects.get(id=pk)
+            # return render(request, "review__detail.html", {"review_": review_})
+
+
+class ReviewEditView(LoginRequiredMixin, UpdateView):
+    model = Review
+    pk_url_kwarg = 'pk_review'
+    template_name = 'review_update.html'
+    form_class = ReviewForm
+
+    def form_valid(self, form):
+        review = Review.objects.get(pk=self.kwargs['pk_review'])
+        review.text = form.cleaned_data['title']
+        review.desc = form.cleaned_data['desc']
+        review.rating = form.cleaned_data['rating']
+        review.save()
+        return redirect(reverse_lazy("product_detail", kwargs={"pk": self.kwargs['pk']}))
+
+class ReviewDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = "review_delete.html"
+    model = Review
+    pk_url_kwarg = 'pk_review'
+
+    def get_success_url(self):
+        return reverse_lazy("product_detail", kwargs={"pk": self.kwargs['pk']})
+

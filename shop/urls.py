@@ -4,7 +4,11 @@ from shop.views import (
   RegisterView,
   LoginView,
   LogoutView,
-  product_detail, category_detail, review_create
+  product_detail,
+  category_detail,
+  review_create,
+  ReviewEditView,
+  ReviewDeleteView,
 )
 
 urlpatterns = [
@@ -15,4 +19,6 @@ urlpatterns = [
     path('product/<int:pk>', product_detail, name='product_detail'),
     path('category/<int:pk>', category_detail, name='category_detail'),
     path('product/<int:pk>/review/create', review_create, name='review_create'),
+    path('product/<int:pk>/review/<int:pk_review>/edit', ReviewEditView.as_view(), name='review_edit'),
+    path('product/<int:pk>/review/<int:pk_review>/delete', ReviewDeleteView.as_view(), name='review_delete'),
 ]
