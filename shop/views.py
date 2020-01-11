@@ -1,16 +1,58 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-
-# Create your views here.
-from django.urls import reverse_lazy
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import (
+    View, TemplateView, CreateView,
+)
 
 from shop.forms import ReviewForm
-from shop.models import Product, Category, Review
+from shop.models import User, Product, Category, Review
+from django.urls import reverse, reverse_lazy
 
 
 def index(request):
-    return HttpResponse("MAINPAGE")
+    return render(request, 'index.html')
+
+
+class RegisterView(CreateView):
+    template_name = 'register.html'
+    form_class = UserCreationForm
+    model = User
+
+    # def form_valid(self, form):
+    #     data = form.cleaned_data
+    #     user = User.objects.create_user(username=data['username'],
+    #                                     password=data['password1'])
+    #     UserProfile.objects.create(user=user)
+    #     # return redirect('post_list')
+
+
+class LoginView(TemplateView):
+    template_name = 'login.html'
+
+    def get_context_data(self):
+        form = AuthenticationForm()
+        return {'form': form}
+
+    def post(self, request, *args, **kwargs):
+        form = AuthenticationForm(request=request, data=request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = authenticate(username=data['username'],
+                                password=data['password'])
+            login(request, user)
+            return redirect(reverse('index'))
+        else:
+            return render(request, "login.html", {"form": form})
+
+
+class LogoutView(LoginRequiredMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return redirect(reverse('login'))
 
 
 def product_detail(request, pk):
