@@ -1,15 +1,11 @@
 from django.urls import path
 from shop.views import (
-  index,
-  RegisterView,
-  LoginView,
-  LogoutView,
-  product_detail,
-  category_detail,
-  review_create,
-  ReviewEditView,
-  ReviewDeleteView,
-)
+    index,
+    RegisterView,
+    LoginView,
+    LogoutView,
+    product_detail, category_detail, review_create,
+    UserProfileView, ReviewEditView, ReviewDeleteView)
 
 urlpatterns = [
     path('', index, name='index'),
@@ -19,6 +15,7 @@ urlpatterns = [
     path('product/<int:pk>', product_detail, name='product_detail'),
     path('category/<int:pk>', category_detail, name='category_detail'),
     path('product/<int:pk>/review/create', review_create, name='review_create'),
+    path('user_profile/<int:pk>', UserProfileView.as_view(), name='user_profile'),
     path('product/<int:pk>/review/<int:pk_review>/edit', ReviewEditView.as_view(), name='review_edit'),
     path('product/<int:pk>/review/<int:pk_review>/delete', ReviewDeleteView.as_view(), name='review_delete'),
 ]

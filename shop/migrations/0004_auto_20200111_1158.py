@@ -26,4 +26,9 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='shop.Product'),
             preserve_default=False,
         ),
+        migrations.AddField(
+            model_name='userprofile',
+            name='avatar',
+            field=models.FileField(blank=True, null=True, upload_to='media/'),
+        ),
     ]
