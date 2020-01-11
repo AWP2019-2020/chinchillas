@@ -6,7 +6,14 @@ from django.db import models
 User = get_user_model()
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
 class Product(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=200)
     desc = models.CharField(max_length=2000)
     price = models.FloatField()
@@ -17,13 +24,8 @@ class Product(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=200)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-
 class Review(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     desc = models.CharField(max_length=2000)
     rating = models.FloatField()
