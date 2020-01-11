@@ -28,7 +28,6 @@ class RegisterView(CreateView):
                                         password=data['password1'])
         UserProfile.objects.create(user=user)
         shopping_cart = ShoppingCart.objects.create(user=user, state=True)
-        shopping_cart.save()
         return redirect('index')
 
 
