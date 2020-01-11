@@ -1,30 +1,36 @@
-<ul class="nav">
-  <li class="nav-item">
-    <a class="nav-link active" href="{% url 'index' %}">Shop</a>
-  </li>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{% url 'index' %}">Chinchillas Shop</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
 
-  {% if user.is_authenticated %}
-    <li class="nav-item">
-      <a class="nav-link active" href="{% url 'user_profile' user.id%}">Hello, {{ user.username }}</a>
-    </li>
-    {% if user.is_superuser %}
-    <li class="nav-item">
-      <a class="nav-link active" href="#">Admin</a>
-    </li>
-    {% endif %}
-    <li class="nav-item">
-      <a class="nav-link active" href="{% url 'logout' %}">Logout</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link active" href="{% url 'shoppingCart_detail' %}">Shopping Cart</a>
-    </li>
-  {% else %}
-    <li class="nav-item">
-      <a class="nav-link" href="{% url 'register' %}">Register</a>
-    </li>
-    <li class="nav-item">
-       <a class="nav-link active" href="{% url 'login' %}">Login</a>
-    </li>
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'user_profile' user.id%}">Hello, {{ user.username }}</a>
+          </li>
+          {% if user.is_superuser %}
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Admin</a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'logout' %}">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'shoppingCart_detail' %}">Shopping Cart</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+          </li>
+          <li class="nav-item">
+             <a class="nav-link active" href="{% url 'login' %}">Login</a>
+          </li>
 
-  {% endif %}
-  </ul>
+        {% endif %}
+
+    </ul>
+  </div>
+</nav>

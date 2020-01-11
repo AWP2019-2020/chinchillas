@@ -64,8 +64,8 @@ def product_detail(request, pk):
 
 
 def category_detail(request, pk):
-    category = Category.objects.get(id=pk)
-    return render(request, "category_detail.html", {"category": category})
+    products = Product.objects.filter(category__id=pk)
+    return render(request, "category_detail.html", {"products": products})
 
 
 def review_detail(request, pk):
