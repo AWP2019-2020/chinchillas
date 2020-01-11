@@ -8,7 +8,7 @@ from django.views.generic import (
     UpdateView, DeleteView, DetailView)
 
 from shop.forms import ReviewForm
-from shop.models import User, Product, Category, Review, UserProfile
+from shop.models import User, Product, Category, Review, ShoppingCart, UserProfile
 from django.urls import reverse, reverse_lazy
 
 
@@ -21,12 +21,14 @@ class RegisterView(CreateView):
     form_class = UserCreationForm
     model = User
 
-    # def form_valid(self, form):
-    #     data = form.cleaned_data
-    #     user = User.objects.create_user(username=data['username'],
-    #                                     password=data['password1'])
-    #     UserProfile.objects.create(user=user)
-    #     # return redirect('post_list')
+    def form_valid(self, form):
+        data = form.cleaned_data
+        user = User.objects.create_user(username=data['username'],
+                                        password=data['password1'])
+        UserProfile.objects.create(user=user)
+        shopping_cart = ShoppingCart.objects.create(user=user, state=True)
+        shopping_cart.save()
+        return redirect('index')
 
 
 class LoginView(TemplateView):
@@ -66,8 +68,24 @@ def category_detail(request, pk):
 
 
 def review_detail(request, pk):
-    review_ = Review.objects.get(id=pk)
-    return render(request, "review__detail.html", {"review_": review_})
+    review = Review.objects.get(id=pk)
+    return render(request, "review_detail.html", {"review": review})
+
+
+def shoppingCart(request):
+    shoppingCart = ShoppingCart.objects.filter(user=request.user, state=True)
+    if len(shoppingCart):
+        shoppingCart = shoppingCart.first()
+        return render(request, "shoppingCart.html", {"shoppingCart": shoppingCart})
+    return redirect(reverse('index'))
+
+
+def deactivate_cart(request, pk):
+    shoppingCart = ShoppingCart.objects.get(id=pk, state=True)
+    shoppingCart.state = False
+    shoppingCart.save()
+    ShoppingCart.objects.create(user=request.user, state=True)
+    return redirect(reverse("index"))
 
 
 @login_required
@@ -108,6 +126,7 @@ class ReviewDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse_lazy("product_detail", kwargs={"pk": self.kwargs['pk']})
+
 
 
 class UserProfileView(LoginRequiredMixin, DetailView):
