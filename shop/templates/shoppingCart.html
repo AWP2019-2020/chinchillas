@@ -2,9 +2,44 @@
 
 {% block content %}
 {% for product in shoppingCart.cart_products %}
-{{  product.product.name }}
+<div class="container">
+    <div class="p-3">
+        <div class="card">
+            <p class="card-text">
+                <a href="#">{{ product.product.name }}</a>
+            </p>
+            {% if product.product.image %}
+            <img class="card-img-top" src="{{ product.product.image.url }}" alt="Card image cap">
+            {% endif %}
+            <div class="card-body">
+                <h1 class="card-title">
+                    {{ product.text }}
+                    {% if product.product.created_at|date:"Y-m-d H:i" != product.product.updated_at|date:"Y-m-d H:i" %}
+                    <small><i>(edited)</i></small>
+                    {% endif %}
+                </h1>
+
+                <p class="card-text">Created by:
+                    {{ product.product.created_by.username }}</a>
+                </p>
+                 <p class="card-text">Price:
+                    {{ product.product.price }}</a>
+                </p>
+                 <p class="card-text">Quantity:
+                    {{ product.quantity }}</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 {% endfor %}
 
+<div class="container">
+    <p class="card-text">Total Price:
+        {{ shoppingCart.totalPrice }}</a>
+    </p>
+</div>
 
-Total price = {{ shoppingCart.totalPrice }}
+<a href="{% url 'deactivate_cart' shoppingCart.id %}">Checkout</a>
+
 {% endblock %}

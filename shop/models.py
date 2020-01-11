@@ -34,6 +34,7 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
 class Country(models.Model):
     code = models.CharField(max_length=3, primary_key=True)
     name = models.CharField(max_length=70)
@@ -44,6 +45,7 @@ class Country(models.Model):
     class Meta:
         verbose_name_plural = "Countries"
 
+
 class UserProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='profile')
     birthday = models.DateField(blank=True, null=True)
@@ -51,10 +53,9 @@ class UserProfile(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name="profiles", blank=True, null=True)
 
 
-
-
 class ShoppingCart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    state = models.BooleanField()
 
     @property
     def totalPrice(self):
