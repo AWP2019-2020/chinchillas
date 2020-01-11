@@ -8,7 +8,7 @@ from django.views.generic import (
 )
 
 from shop.forms import ReviewForm
-from shop.models import User, Product, Category, Review
+from shop.models import User, Product, Category, Review, ShoppingCart
 from django.urls import reverse, reverse_lazy
 
 
@@ -26,7 +26,7 @@ class RegisterView(CreateView):
     #     user = User.objects.create_user(username=data['username'],
     #                                     password=data['password1'])
     #     UserProfile.objects.create(user=user)
-    #     # return redirect('post_list')
+    #     return redirect('post_list')
 
 
 class LoginView(TemplateView):
@@ -66,8 +66,15 @@ def category_detail(request, pk):
 
 
 def review_detail(request, pk):
-    review_ = Review.objects.get(id=pk)
-    return render(request, "review__detail.html", {"review_": review_})
+    review = Review.objects.get(id=pk)
+    return render(request, "review_detail.html", {"review": review})
+
+
+def shoppingCart(request, pk):
+    shoppingCart = ShoppingCart.objects.filter(user__id=pk)
+    if len(shoppingCart):
+        shoppingCart = shoppingCart.first()
+    return render(request, "shoppingCart.html", {"shoppingCart": shoppingCart})
 
 
 @login_required

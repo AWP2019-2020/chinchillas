@@ -33,3 +33,24 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
+class ShoppingCart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    @property
+    def totalPrice(self):
+        sum = 0
+        for product in list(self.products.all()):
+            sum += product.product.price * product.quantity
+        return sum
+
+    @property
+    def cart_products(self):
+        return list(self.products.all())
+
+
+class ShoppingCartProduct(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    shoppingCart = models.ForeignKey(ShoppingCart, on_delete=models.CASCADE, related_name="products")
+    quantity = models.IntegerField()
+
