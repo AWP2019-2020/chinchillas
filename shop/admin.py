@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from shop import models
-from shop.models import Product, Category, Review, ShoppingCart, ShoppingCartProduct
+from shop.models import Product, Category, Review, ShoppingCart, ShoppingCartProduct, UserProfile, Country
 
 
 class ShoppingCartAdmin(admin.ModelAdmin):
@@ -24,4 +24,5 @@ admin.site.register(Category)
 admin.site.register(Review)
 admin.site.register(ShoppingCart, ShoppingCartAdmin)
 admin.site.register(ShoppingCartProduct)
-
+admin.site.register(UserProfile)
+admin.site.register(Country)

@@ -5,15 +5,8 @@ from shop.views import (
     LoginView,
     LogoutView,
     product_detail, category_detail, review_create,
-    shoppingCart)
-  index,
-  RegisterView,
-  LoginView,
-  LogoutView,
-  UserProfileView,
-  UserProfile,
-  product_detail, category_detail, review_create, UserProfile
-)
+    shoppingCart,
+    UserProfileView)
 
 urlpatterns = [
     path('', index, name='index'),
