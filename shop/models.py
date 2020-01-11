@@ -18,6 +18,7 @@ class Product(models.Model):
     desc = models.CharField(max_length=2000)
     price = models.FloatField()
     rating = models.FloatField()
+    stock = models.IntegerField(blank=True, null=True)
     image = models.FileField(upload_to='uploads/', blank=True, null=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products')
     created_at = models.DateTimeField(auto_now_add=True)
