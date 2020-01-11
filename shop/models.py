@@ -12,10 +12,22 @@ class Product(models.Model):
     price = models.FloatField()
     rating = models.FloatField()
     image = models.FileField(upload_to='uploads/', blank=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='posts')
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class Categogory(models.Model):
+class Category(models.Model):
     name = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class Review(models.Model):
+    title = models.CharField(max_length=200)
+    desc = models.CharField(max_length=2000)
+    rating = models.FloatField()
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
